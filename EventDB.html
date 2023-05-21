@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <title>Event and Operations</title>
+
+      <style>
+
+      body {
+    background-color: blue;
+  }
+  h1 {
+    text-align: center;
+    color: orange;
+  }
+  h2 {
+  text-align: center;
+    color: orange;
+  }
+
+      .carousel {
+        display: flex;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .carousel__item {
+        flex: 0 0 auto;
+        width: 300px;
+        margin-right: 16px;
+        scroll-snap-align: start;
+      }
+
+      .carousel__img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .carousel__title {
+        margin: 8px 0;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .carousel__date {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #888;
+      }
+
+      .alert {
+      padding: 20px;
+      background-color: #4CAF50;
+      color: white;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    /* Style the close button */
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    /* When hovering over the close button */
+    .closebtn:hover {
+      color: black;
+    }
+
+
+    </style>
+
+ <!-- <script>
+      // Get a reference to the carousel element
+      const carousel = document.querySelector("#myCarousel .carousel-inner");
+
+      // Fetch the data from the server
+      fetch("https://example.com/events")
+        .then(response => response.json())
+        .then(data => {
+          // Loop through the data and create carousel items
+          for (let event of data) {
+            // Create a new carousel item
+            const item = document.createElement("div");
+            item.classList.add("carousel-item");
+
+            // Create an image element
+            const img = document.createElement("img");
+            img.classList.add("d-block", "w-100");
+            img.src = event.image;
+            img.alt = event.title;
+
+            // Add the image to the carousel item
+            item.appendChild(img);
+
+            // Add the carousel item to the carousel
+            carousel.appendChild(item);
+          }
+
+          // Set the first item to active
+          carousel.firstChild.classList.add("active");
+        })
+        .catch(error => console.error(error));
+    </script>
+-->
+</head>
+<body>
+
+
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Spoon</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/event_dashboard">Events and Operations</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<h1>Spoon</h1>
+<h2>Events and operations</h2>
+
+ <div class="container">
+  <div class="row">
+
+<div class="col-md-6">
+  <div class="container-fluid">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+
+        {% for event in events %}
+        <div class="carousel-item {% if loop.first %} active{% endif %}">
+          <a href="{{ event.event_link }}">
+            <img src="{{ event.image_url }}" class="d-block w-100" alt="{{ event.event_title }}">
+            <div class="carousel-caption">
+              <h3>{{ event.name }}</h3>
+              <p>{{ event.event_date.strftime('%B %d, %Y') }}</p>
+              <p>{{ event.description }}</p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+ <div class="col-md-6">
+ <div class="card">
+  <div class="card-header">
+    Event Registration
+  </div>
+  <div class="card-body">
+
+    <form method="POST" action="/register">
+  <div class="form-group">
+    <label for="event-name">Event Name</label>
+    <input type="text" class="form-control" id="event-name" name="event-name" placeholder="Enter event name">
+  </div>
+  <div class="form-group">
+    <label for="event-date-time">Event Date and Time</label>
+    <input type="datetime-local" class="form-control" id="event-date-time" name="event-date-time">
+  </div>
+  <div class="form-group">
+    <label for="event-location">Event Location</label>
+    <input type="text" class="form-control" id="event-location" name="event-location" placeholder="Enter event location">
+  </div>
+  <div class="form-group">
+    <label for="registration-deadline">Registration Deadline</label>
+    <input type="datetime-local" class="form-control" id="registration-deadline" name="registration-deadline">
+  </div>
+  <div class="form-group">
+    <label for="registration-fee">Registration Fee</label>
+    <input type="number" class="form-control" id="registration-fee" name="registration-fee" placeholder="Enter registration fee">
+  </div>
+  <div class="form-group">
+    <label for="contact-person-name">Contact Person's Name</label>
+    <input type="text" class="form-control" id="contact-person-name" name="contact-person-name" placeholder="Enter contact person's name">
+  </div>
+  <div class="form-group">
+    <label for="contact-person-email">Contact Person's Email</label>
+    <input type="email" class="form-control" id="contact-person-email" name="contact-person-email" placeholder="Enter contact person's email">
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+  </div>
+</div>
+</div>
+
+
+  </div>
+ </div>
+
+    <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+
+</body>
+</html>
