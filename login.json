@@ -1,0 +1,44 @@
+{
+    "user_login": [
+        {
+            "email": "AlokChatterjee@gmail.com",
+            "password": "A12345"
+        },
+        {
+            "email": "Deb Chatterjee",
+            "password": "D12345"
+        },
+        {
+            "email": "kishorechatterjee93@gmail.com",
+            "password": "K12345"
+        },
+        {
+            "email": "abcd@gmail.com",
+            "password": "a@12345"
+        },
+        {
+            "email": "rinku@gmail.com",
+            "password": "banerjee"
+        },
+        {
+            "email": "leon@gmail.com",
+            "password": "abcd"
+        },
+        {
+            "email": "deep@gmail.com",
+            "password": "1234"
+        },
+        {
+            "email": "satwik@yahoo.com",
+            "password": "1234"
+        },
+        {
+            "email": "rini@outlook.com",
+            "password": "qwerty"
+        },
+        {
+            "email": "atanu@yahoo.com",
+            "password": "Saibaba"
+        }
+    ]
+}
